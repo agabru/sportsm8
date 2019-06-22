@@ -105,7 +105,7 @@ class User extends REST_Controller {
         {
             $data = array('upload_data' => $this->upload->data());
 
-            //$this->load->view('upload_success', $data);
+            $this->load->view('upload_success', $data);
         }
     }
 }
