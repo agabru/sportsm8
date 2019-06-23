@@ -39,5 +39,25 @@ class User_model extends CI_Model {
 		$this->db->delete('user');
 		return $this->db->affected_rows();
 	}
+
+	public function upload_user_media($user_data){
+		$this->db->insert('user_media',$user_data);
+		return $this->db->affected_rows();
+	}
+
+	public function  get_user_media($user_id)
+	{
+		$this->db->where('user_id',$user_id);
+		$this->db->from('user_media');
+		$query=$this->db->get();
+		return $query->result_array();
+	}
+
+	public function  delete_user_media($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->delete('user_media');
+		return $this->db->affected_rows();
+	}
 	
 }

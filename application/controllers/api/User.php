@@ -26,7 +26,7 @@ class User extends REST_Controller {
         $user=$this->User_model->signup($user_data);
         if (!empty($user))
         {
-            response($user);
+            response(['message'=>message('user_created') ]);
         }
         else
         {
@@ -90,22 +90,113 @@ class User extends REST_Controller {
     }
 
     function media_post(){
-        $config['upload_path']          = './uploads/';
-        $config['allowed_types']        = 'gif|jpg|png';
 
+        $user_media= time();
+        $user_id=$this->input->post('user_id');
+        $file_type=strstr($_FILES['userfile']['type'],'/',true);
+        if($file_type=="image"){
+                $status='1';
+                $upload_path='./uploads/img';
+        }
+        else if($file_type=="video"){
+            $status='1';
+            $upload_path='./uploads/vdo';
+        }
+        else{
+            response([
+            'status' => FALSE,
+            'message' => message('Please upload only image/video')
+            ]);
+        }
+        $config['upload_path']          =  $upload_path;
+        $config['allowed_types']        =  '*';
+        $config['file_name']            =  $user_media;
+        $config['file_ext_tolower']     =  TRUE;
+        
         $this->load->library('upload', $config);
 
-        if ( ! $this->upload->do_upload('userfile'))
+        if (!$this->upload->do_upload('userfile'))
         {
-            $error = array('error' => $this->upload->display_errors());
-
-            $this->load->view('upload_form', $error);
+            response([
+                    'status' => FALSE,
+                    'message' => strip_tags($this->upload->display_errors())
+                ]);
         }
         else
         {
-            $data = array('upload_data' => $this->upload->data());
-
-            $this->load->view('upload_success', $data);
+            
+            
+            $user_data = array(
+                                'user_id'    => $user_id,
+                                'media_type' => $status,
+                                'media_name' => $this->upload->data('file_name')
+                                );
+            $result=$this->User_model->upload_user_media($user_data);
+            if ($result>0)
+            {
+                response(['message'=>message('media_uploaded')]);
+            }
+            else
+            {
+                response([
+                    'status' => FALSE,
+                    'message' => message('media_not_uploaded')
+                ]);
+            }            
         }
+    }
+
+    function media_get(){
+        $user_id=$this->uri->segment(4);
+        $user_media=$this->User_model->get_user_media($user_id);
+        // print_r($user_media);
+        // die();
+        if (!empty($user_media))
+        {
+            response($user_media);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('user_media_not_found')
+                ]);
+            
+        }
+    }
+
+    function media_delete(){
+        $user_id=$this->uri->segment(4);
+        $user_media=$this->User_model->delete_user_media($user_id);
+        if (!empty($user_media))
+        {
+            response($user_media);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('user_media_not_found')
+                ]);            
+        }
+    }
+
+    function follow_post(){
+        $follower_id    =  $this->input->post('user_id');
+        $following_id   =  $this->input->post('follow_id');
+        $status         =  $this->input->post('status');
+        $user_media=$this->User_model->delete_user_media($user_id);
+        if (!empty($user_media))
+        {
+            response($user_media);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('user_media_not_found')
+                ]);            
+        }
+
     }
 }
