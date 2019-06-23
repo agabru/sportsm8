@@ -12,7 +12,7 @@ class User extends REST_Controller {
         date_default_timezone_set("Asia/Kuwait");
     }
 
-    function index_post() {
+    function profile_post() {
     	$user_name=$this->input->post('user_name');
     	$user_email=$this->input->post('user_email');
         $user_mobile=$this->input->post('user_mobile');
@@ -37,8 +37,8 @@ class User extends REST_Controller {
         }
     }
 
-    function index_put(){
-        $user_id=$this->uri->segment(3);
+    function profile_put(){
+        $user_id=$this->uri->segment(4);
         $user_data=json_decode(file_get_contents("php://input"),true);
         // print_r($user_data);
         // die();
@@ -56,8 +56,8 @@ class User extends REST_Controller {
         }
     }
 
-    function index_get(){
-        $user_id=$this->uri->segment(3);
+    function profile_get(){
+        $user_id=$this->uri->segment(4);
         $user=$this->User_model->get_user($user_id);
         if (!empty($user))
         {
@@ -73,8 +73,8 @@ class User extends REST_Controller {
         }
     }
 
-    function index_delete(){
-        $user_id=$this->uri->segment(3);
+    function profile_delete(){
+        $user_id=$this->uri->segment(4);
         $result=$this->User_model->delete_user($user_id);
         if (!empty($result))
         {
@@ -181,22 +181,25 @@ class User extends REST_Controller {
         }
     }
 
-    function follow_post(){
-        $follower_id    =  $this->input->post('user_id');
-        $following_id   =  $this->input->post('follow_id');
-        $status         =  $this->input->post('status');
-        $user_media=$this->User_model->delete_user_media($user_id);
-        if (!empty($user_media))
-        {
-            response($user_media);
-        }
-        else
-        {
-            response([
-                    'status' => FALSE,
-                    'message' => message('user_media_not_found')
-                ]);            
-        }
+    // function follow_post(){
+    //     $follower_id    =  $this->input->post('user_id');
+    //     $following_id   =  $this->input->post('follow_id');
+    //     $status         =  $this->input->post('status');
 
-    }
+    //     $user_data = array('follower_id' => $follower_id,
+    //                         'following_id'=> $following_id,
+    //                         'status'  => $status );
+    //     $user_follow=$this->User_model->follow_user($status,$user_data);
+    //     if (!empty($user_follow))
+    //     {
+    //         response(['message'=>message('media_uploaded')]);
+    //     }
+    //     else
+    //     {
+    //         response([
+    //                 'status' => FALSE,
+    //                 'message' => message('user_media_not_found')
+    //             ]);            
+    //     }
+    // }
 }

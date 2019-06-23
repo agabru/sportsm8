@@ -59,5 +59,17 @@ class User_model extends CI_Model {
 		$this->db->delete('user_media');
 		return $this->db->affected_rows();
 	}
+
+	// public function follow_user($status,$user_data)
+	// {
+	// 	if($status=='1')
+	// 		$this->db->insert('follow_user',$user_data);
+	// 	else if ($status=='2') {
+	// 		$this->db->where('user_id',$user_id);
+	// 		$this->db->update('user',$user_data);
+	// 		return $this->db->affected_rows();
+	// 	}
+	// 	return $this->db->affected_rows();
+	// }
 	
 }
