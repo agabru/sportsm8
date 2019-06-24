@@ -202,4 +202,30 @@ class User extends REST_Controller {
     //             ]);            
     //     }
     // }
+
+    // function follow_rply_post(){
+    //     $follower_id    =  $this->input->post('user_id');
+    //     $following_id   =  $this->input->post('');
+    //     $status         =  $this->input->post('status');
+
+    //     $user_data = array('follower_id' => $follower_id,
+    //                         'following_id'=> $following_id,
+    //                         'status'  => $status );
+    //     $user_follow=$this->User_model->follow_user($status,$user_data);
+    //     if (!empty($user_follow))
+    //     {
+    //         response(['message'=>message('media_uploaded')]);
+    //     }
+    //     else
+    //     {
+    //         response([
+    //                 'status' => FALSE,
+    //                 'message' => message('user_media_not_found')
+    //             ]);            
+    //     }
+    // }
+
+    // function report_user(){
+
+    // }
 }
