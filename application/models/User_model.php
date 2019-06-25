@@ -17,6 +17,10 @@ class User_model extends CI_Model {
 		}
 	}
 
+	public function add_interest($int_arr)
+	{
+		$this->db->insert_batch('user_category',$int_arr);
+	}
 	public function edit_profile($user_id,$user_data)
 	{
 		//print_r($user_data);
@@ -25,6 +29,12 @@ class User_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
+	public function edit_interest($user_id,$int_arr)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->delete('user_category');
+		$this->db->insert_batch('user_category',$int_arr);
+	}
 	public function get_user($user_id)
 	{
 		$this->db->where('user_id',$user_id);
@@ -60,16 +70,16 @@ class User_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	// public function follow_user($status,$user_data)
-	// {
-	// 	if($status=='1')
-	// 		$this->db->insert('follow_user',$user_data);
-	// 	else if ($status=='2') {
-	// 		$this->db->where('user_id',$user_id);
-	// 		$this->db->update('user',$user_data);
-	// 		return $this->db->affected_rows();
-	// 	}
-	// 	return $this->db->affected_rows();
-	// }
+	public function follow_user($status,$user_data)
+	{
+		if($status=='1')
+			$this->db->insert('follow_user',$user_data);
+		else if ($status=='2'||$status=='3') {
+			$this->db->where('follower_id',$user_data['follower_id']);
+			$this->db->where('following_id',$user_data['following_id']);
+			$this->db->update('follow_user',$user_data);
+		}
+		return $this->db->affected_rows();
+	}
 	
 }

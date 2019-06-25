@@ -14,6 +14,11 @@ $lang['user_updated'] = 'User details updated successfully';
 $lang['user_not_deleted'] = 'User could not be deleted';
 $lang['user_deleted'] = 'User Deleted succesfully';
 
+$lang['follow_req_success']='Follow requested successfully';
+$lang['follow_req_accept']='Follow request accepted';
+$lang['follow_req_reject']='Follow request rejected';
+$lang['wrong_follow_req']='Wrong follow request';
+
 $lang['media_uploaded'] = 'File Uploaded successfully';
 $lang['media_not_uploaded'] = 'File uploading failed';
 $lang['wrong_media'] = 'Please upload only image/video';

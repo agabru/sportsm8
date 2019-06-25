@@ -17,15 +17,23 @@ class User extends REST_Controller {
     	$user_email=$this->input->post('user_email');
         $user_mobile=$this->input->post('user_mobile');
         $user_password=$this->input->post('user_password');
-
+        $user_interest=$this->input->post('user_interest');
         $user_data = array('user_name' => $user_name,
                             'user_email'=>$user_email,
                             'user_mobile'=>$user_mobile,
                             'user_password'=>$user_password);
 
-        $user=$this->User_model->signup($user_data);
-        if (!empty($user))
+        $user_id=$this->User_model->signup($user_data);
+
+        if (!empty($user_id))
         {
+            $user_interest=explode(',', $user_interest);
+            $int_arr=array();
+            foreach ($user_interest as $key => $value) {
+                $int_arr[$key]['user_id']=$user_id;
+                $int_arr[$key]['cat_id']=$value;
+            }
+            $this->User_model->add_interest($int_arr);
             response(['message'=>message('user_created') ]);
         }
         else
@@ -40,8 +48,18 @@ class User extends REST_Controller {
     function profile_put(){
         $user_id=$this->uri->segment(4);
         $user_data=json_decode(file_get_contents("php://input"),true);
-        // print_r($user_data);
-        // die();
+        if(array_key_exists('user_interest', $user_data))
+        {
+            $user_interest=$user_data['user_interest'];
+            unset($user_data['user_interest']);
+            $user_interest=explode(',', $user_interest);
+            $int_arr=array();
+            foreach ($user_interest as $key => $value) {
+                $int_arr[$key]['user_id']=$user_id;
+                $int_arr[$key]['cat_id']=$value;
+            }
+            $this->User_model->edit_interest($user_id,$int_arr);
+        }
         $status=$this->User_model->edit_profile($user_id,$user_data);
         if (!empty($status))
         {
@@ -181,49 +199,34 @@ class User extends REST_Controller {
         }
     }
 
-    // function follow_post(){
-    //     $follower_id    =  $this->input->post('user_id');
-    //     $following_id   =  $this->input->post('follow_id');
-    //     $status         =  $this->input->post('status');
+    function follow_post(){
+        $follower_id    =  $this->input->post('user_id');
+        $following_id   =  $this->input->post('follow_id');
+        $status         =  $this->input->post('status');
 
-    //     $user_data = array('follower_id' => $follower_id,
-    //                         'following_id'=> $following_id,
-    //                         'status'  => $status );
-    //     $user_follow=$this->User_model->follow_user($status,$user_data);
-    //     if (!empty($user_follow))
-    //     {
-    //         response(['message'=>message('media_uploaded')]);
-    //     }
-    //     else
-    //     {
-    //         response([
-    //                 'status' => FALSE,
-    //                 'message' => message('user_media_not_found')
-    //             ]);            
-    //     }
-    // }
-
-    // function follow_rply_post(){
-    //     $follower_id    =  $this->input->post('user_id');
-    //     $following_id   =  $this->input->post('');
-    //     $status         =  $this->input->post('status');
-
-    //     $user_data = array('follower_id' => $follower_id,
-    //                         'following_id'=> $following_id,
-    //                         'status'  => $status );
-    //     $user_follow=$this->User_model->follow_user($status,$user_data);
-    //     if (!empty($user_follow))
-    //     {
-    //         response(['message'=>message('media_uploaded')]);
-    //     }
-    //     else
-    //     {
-    //         response([
-    //                 'status' => FALSE,
-    //                 'message' => message('user_media_not_found')
-    //             ]);            
-    //     }
-    // }
+        $user_data = array('follower_id' => $follower_id,
+                            'following_id'=> $following_id,
+                            'status'  => $status );
+        $user_follow=$this->User_model->follow_user($status,$user_data);
+        if (!empty($user_follow))
+        {
+            if($status==1)
+                response(['message'=>message('follow_req_success')]);
+            else if($status==2)
+                response(['message'=>message('follow_req_accept')]);
+            else if($status==3)
+                response(['message'=>message('follow_req_reject')]);
+            else
+                response(['message'=>message('wrong_follow_req')]);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('follow_req_failure')
+                ]);            
+        }
+    }
 
     // function report_user(){
 

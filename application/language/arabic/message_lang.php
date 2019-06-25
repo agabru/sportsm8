@@ -14,6 +14,11 @@ $lang['user_updated'] = 'تحديث تفاصيل المستخدم بنجاح';
 $lang['user_not_deleted'] = 'لا يمكن حذف المستخدم';
 $lang['user_deleted']     = 'تم حذف المستخدم بنجاح';
 
+$lang['follow_req_success']='اتبع المطلوبة بنجاح';
+$lang['follow_req_accept']='اتبع طلب مقبول';
+$lang['follow_req_reject']='اتبع طلب رفض';
+$lang['wrong_follow_req']='متابعة طلب خاطئ';
+
 $lang['media_not_uploaded'] = 'فشل تحميل الملف';
 $lang['media_uploaded'] = 'تم رفع الملف بنجاح';
 $lang['wrong_media'] = 'يرجى تحميل الصورة فقط / الفيديو';
