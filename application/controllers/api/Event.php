@@ -27,7 +27,7 @@ class Event extends REST_Controller {
 						'event_location'=>$event_location,
 						'event_date'=>$event_date,
 						'event_time'=>$event_time,
-						'gender_rqd'=>$gender_rqd,
+						'gender_rqd'=>$gender_rqd,/websites/projects/
 						'event_category'=>$event_cat,
 						'event_created_by_uid'=>$user_id
 					);
@@ -156,6 +156,29 @@ class Event extends REST_Controller {
             response(['message'=>message('wrong_event_req')]);
     }
 
-    
+    public function event_comment_post(){
+        $user_id =$this->input->post('user_id');
+        $event_id=$this->input->post('event_id');
+        $comment=$this->input->post('comment');
+        $comment_data=array('user_id'=>$user_id,
+                        'event_id'=>$event_id,
+                        'comment'=>$comment);
+        $comm_id=$this->Event_model->event_comment($comment_data);
+        if($comm_id>0){
+                response(['message'=>message('comment ID is:'+$comm_id)]);
+        }
+        else
+            response(['message'=>message('event_not_commented')]);
+	}
+	
+	public function delete_comment_delete(){
+		$comm_id =$this->uri->segment(4);
+        $comm_status=$this->Event_model->event_comment_del($comm_id);
+        if($comm_status>0){
+                response(['message'=>message('comment_delete')]);
+        }
+        else
+            response(['message'=>message('comment_not_delete')]);
+	}
 
 }

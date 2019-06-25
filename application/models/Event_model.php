@@ -53,4 +53,17 @@ class Event_model extends CI_Model {
 		$this->db->update('user_event',$req_data);
 		return $this->db->affected_rows();
 	}
+
+	function event_comment($comment_data){
+		$this->db->insert('event_comment',$comment_data);
+		if($this->db->affected_rows())
+			return $this->db->insert_id();
+		return 0;
+	}
+
+	function event_comment_del($comm_id){
+		$this->db->where('comment_id',$comm_id);
+		$this->db->delete('event_comment');
+		return $this->db->affected_rows();
+	}
 }

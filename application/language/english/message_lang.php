@@ -45,3 +45,7 @@ $lang['event_not_requested']='something went wrong while requesting to join even
 $lang['event_req_accept']='Request to join event accepted';
 $lang['event_req_reject']='Request to join event rejected';
 $lang['wrong_event_req']='Wrong event join request';
+$lang['event_commented']='Commented on event done';
+$lang['event_not_commented']='Not commented on event';
+$lang['comment_delete']='Comment deleted successfully';
+$lang['comment_not_delete']='Sorry!!Comment can\'t be deleted';
