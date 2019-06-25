@@ -24,6 +24,11 @@ $lang['media_not_uploaded'] = 'File uploading failed';
 $lang['wrong_media'] = 'Please upload only image/video';
 $lang['user_media_not_found']='User Media Not Found';
 
+$lang['user_reported']='User reported successfully';
+$lang['user_blocked']='User blocked successfully';
+$lang['wrong_report_req']='Wrong report request';
+$lang['report_req_failure']='Report request failed';
+
 $lang['event_created']= 'Event created successfully';
 $lang['event_not_created']='Event creation failed';
 $lang['event_not_found']='Sorry!! Event not found!!';

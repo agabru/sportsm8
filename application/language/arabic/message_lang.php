@@ -24,6 +24,11 @@ $lang['media_uploaded'] = 'تم رفع الملف بنجاح';
 $lang['wrong_media'] = 'يرجى تحميل الصورة فقط / الفيديو';
 $lang['user_media_not_found']='لم يتم العثور على وسائط المستخدم';
 
+$lang['user_reported']='أبلغ المستخدم بنجاح';
+$lang['user_blocked']='تم حظر المستخدم بنجاح';
+$lang['wrong_report_req']='طلب تقرير خاطئ';
+$lang['report_req_failure']='فشل طلب التقرير';
+
 $lang['event_created']= 'تم إنشاء الحدث بنجاح';
 $lang['event_not_created']='فشل إنشاء الحدث';
 $lang['event_not_found']='آسف!! لم يتم العثور على الحدث!';

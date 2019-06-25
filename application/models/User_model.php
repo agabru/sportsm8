@@ -81,5 +81,18 @@ class User_model extends CI_Model {
 		}
 		return $this->db->affected_rows();
 	}
+
+	public function report_user($status,$user_data)
+	{
+		$this->db->insert('report_user',$user_data);
+		return $this->db->affected_rows();
+	}
+
+	public function delete_report_user($report_by_user,$report_to_user){
+		$this->db->where('report_by_user', $report_by_user);
+		$this->db->where('report_to_user', $report_to_user);
+		$this->db->delete('report_user');
+		return $this->db->affected_rows();
+	}
 	
 }

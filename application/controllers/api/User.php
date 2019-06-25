@@ -228,7 +228,52 @@ class User extends REST_Controller {
         }
     }
 
-    // function report_user(){
+    function report_post(){
+        $report_by_user    =  $this->input->post('report_by_user');
+        $report_to_user    =  $this->input->post('report_to_user');
+        $status            =  $this->input->post('status');
 
-    // }
+        $user_data = array('report_by_user' => $report_by_user,
+                            'report_to_user'=> $report_to_user,
+                            'status'  => $status );
+        $user_report=$this->User_model->report_user($status,$user_data);
+        if (!empty($user_report))
+        {
+            if($status==1)
+                response(['message'=>message('user_reported')]);
+            else if($status==2)
+                response(['message'=>message('user_blocked')]);
+            else
+                response(['message'=>message('wrong_report_req')]);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('report_req_failure')
+                ]);            
+        }
+    }
+
+    function delete_report_post(){
+        $report_by_user    =  $this->input->post('report_by_user');
+        $report_to_user    =  $this->input->post('report_to_user');
+        $user_report=$this->User_model->delete_report_user($report_by_user,$report_to_user);
+        if (!empty($user_report))
+        {
+            if($status==1)
+                response(['message'=>message('user_reported')]);
+            else if($status==2)
+                response(['message'=>message('user_blocked')]);
+            else
+                response(['message'=>message('wrong_report_req')]);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('report_req_failure')
+                ]);            
+        }
+    }
 }
