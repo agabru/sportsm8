@@ -97,4 +97,65 @@ class Event extends REST_Controller {
             ]);
         }
 	}
+
+    public function like_post(){
+        $user_id =$this->input->post('user_id');
+        $event_id=$this->input->post('event_id');
+        $status  =$this->input->post('status');
+        $event_data=array('user_id'=>$user_id,
+                          'event_id'=>$event_id,
+                          'status'=>$status);
+        $event_status=$this->Event_model->like_event($event_data);
+        if($event_status>0)
+            response(['message'=>message('event_liked')]);
+        else
+            response(['message'=>message('event_not_liked')]);
+    }
+
+    public function remove_like_post(){
+        $user_id =$this->input->post('user_id');
+        $event_id=$this->input->post('event_id');
+        $event_status=$this->Event_model->remove_like_event($user_id,$event_id);
+        if($event_status>0)
+        {
+            response(['message'=>message('like_removed')]);
+        }
+        else
+            response(['message'=>message('wrong_like_remove')]);
+    }
+
+    public function event_req_post(){
+        $user_id =$this->input->post('user_id');
+        $event_id=$this->input->post('event_id');
+        $req_data=array('user_id'=>$user_id,
+                        'event_id'=>$event_id,
+                        'status'=>'0');
+        $req_status=$this->Event_model->event_req($req_data);
+        if($req_status>0)
+            response(['message'=>message('event_requested')]);
+        else
+            response(['message'=>message('event_not_requested')]);
+    }
+
+    public function req_accept_post(){
+        $user_id =$this->input->post('user_id');
+        $event_id=$this->input->post('event_id');
+        $status=$this->input->post('status');
+        $req_data=array('user_id'=>$user_id,
+                        'event_id'=>$event_id,
+                        'status'=>$status);
+        $req_status=$this->Event_model->req_accept($req_data);
+        if($req_status>0){
+            if($status=='1')
+                response(['message'=>message('event_req_accept')]);
+            elseif ($status=='2') {
+                response(['message'=>message('event_req_reject')]);
+            }
+        }
+        else
+            response(['message'=>message('wrong_event_req')]);
+    }
+
+    
+
 }
