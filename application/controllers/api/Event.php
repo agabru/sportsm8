@@ -27,7 +27,7 @@ class Event extends REST_Controller {
 						'event_location'=>$event_location,
 						'event_date'=>$event_date,
 						'event_time'=>$event_time,
-						'gender_rqd'=>$gender_rqd,/websites/projects/
+						'gender_rqd'=>$gender_rqd,
 						'event_category'=>$event_cat,
 						'event_created_by_uid'=>$user_id
 					);
@@ -165,7 +165,7 @@ class Event extends REST_Controller {
                         'comment'=>$comment);
         $comm_id=$this->Event_model->event_comment($comment_data);
         if($comm_id>0){
-                response(['message'=>message('comment ID is:'+$comm_id)]);
+                response(['message'=>message('event_commented')]);
         }
         else
             response(['message'=>message('event_not_commented')]);
@@ -180,5 +180,37 @@ class Event extends REST_Controller {
         else
             response(['message'=>message('comment_not_delete')]);
 	}
+
+    public function pending_req_get(){
+        $user_id =$this->uri->segment(4);
+        $reqs=$this->Event_model->get_pending_reqs($user_id);
+        if(count($reqs)>0){
+                response(['message'=>$reqs]);
+        }
+        else
+            response(['message'=>message('no_pending_reqs')]);
+    }
+
+    function report_post(){
+        $event_id    =  $this->input->post('event_id');
+        $user_id     =  $this->input->post('user_id');
+        $report      =  $this->input->post('report');
+
+        $event_data = array('event_id' => $event_id,
+                            'user_id'=> $user_id,
+                            'report'  => $report );
+        $evt_report=$this->Event_model->report_event($event_data);
+        if (!empty($evt_report))
+        {
+            response(['message'=>message('event_reported')]);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('event_not_reported')
+                ]);            
+        }
+    }
 
 }

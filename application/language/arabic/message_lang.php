@@ -47,3 +47,6 @@ $lang['event_req_reject']='طلب الانضمام إلى الحدث مرفوض'
 $lang['wrong_event_req']='حدث خطأ طلب الانضمام';
 $lang['event_commented']='وعلق على الحدث القيام به';
 $lang['event_not_commented']='لم يعلق على الحدث';
+$lang['no_pending_reqs']='لم يتم العثور على الطلبات المعلقة !!';
+$lang['event_reported']='تم الإبلاغ عن الحدث بنجاح';
+$lang['event_not_reported']='لا يمكن الإبلاغ عن الحدث';

@@ -49,3 +49,6 @@ $lang['event_commented']='Commented on event done';
 $lang['event_not_commented']='Not commented on event';
 $lang['comment_delete']='Comment deleted successfully';
 $lang['comment_not_delete']='Sorry!!Comment can\'t be deleted';
+$lang['no_pending_reqs']='No pending requests found!!';
+$lang['event_reported']='Event reported successfully';
+$lang['event_not_reported']='Event can\'t reported';
