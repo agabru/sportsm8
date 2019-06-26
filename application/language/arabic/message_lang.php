@@ -28,6 +28,7 @@ $lang['user_reported']='أبلغ المستخدم بنجاح';
 $lang['user_blocked']='تم حظر المستخدم بنجاح';
 $lang['wrong_report_req']='طلب تقرير خاطئ';
 $lang['report_req_failure']='فشل طلب التقرير';
+$lang['frnd_not_found']='لم يتم العثور على أصدقاء!';
 
 $lang['event_created']= 'تم إنشاء الحدث بنجاح';
 $lang['event_not_created']='فشل إنشاء الحدث';

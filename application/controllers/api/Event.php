@@ -191,7 +191,7 @@ class Event extends REST_Controller {
             response(['message'=>message('no_pending_reqs')]);
     }
 
-    function report_post(){
+    public function report_post(){
         $event_id    =  $this->input->post('event_id');
         $user_id     =  $this->input->post('user_id');
         $report      =  $this->input->post('report');

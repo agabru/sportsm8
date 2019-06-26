@@ -276,4 +276,21 @@ class User extends REST_Controller {
                 ]);            
         }
     }
+
+    function frnd_suggest_get(){
+        $user_id=$this->uri->segment(4);
+        $frnds=$this->User_model->get_frnd_suggest($user_id);
+        if (!empty($frnds))
+        {
+            response($frnds);
+        }
+        else
+        {
+            response([
+                    'status' => FALSE,
+                    'message' => message('frnd_not_found')
+                ]);
+            
+        }
+    }
 }

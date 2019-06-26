@@ -94,5 +94,15 @@ class User_model extends CI_Model {
 		$this->db->delete('report_user');
 		return $this->db->affected_rows();
 	}
+
+	public function get_frnd_suggest($user_id)
+	{
+		$query=$this->db->query("SELECT DISTINCT user.user_id,user.user_name 
+				FROM `follow_user` AS f1 
+				JOIN user JOIN `follow_user` AS f2 
+				ON f2.follower_id=f1.following_id AND f2.following_id=user.user_id 
+				WHERE f1.follower_id=$user_id AND user.user_id!=$user_id");
+		return $query->result_array();
+	}
 	
 }
