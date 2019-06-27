@@ -51,3 +51,8 @@ $lang['event_not_commented']='لم يعلق على الحدث';
 $lang['no_pending_reqs']='لم يتم العثور على الطلبات المعلقة !!';
 $lang['event_reported']='تم الإبلاغ عن الحدث بنجاح';
 $lang['event_not_reported']='لا يمكن الإبلاغ عن الحدث';
+
+
+$lang['events_not_found']='آسف!! لا توجد أحداث !!';
+$lang['no_frnds']='آسف !! لا يوجد أصدقاء';
+$lang['no_users']='عذرا !! لم يتم العثور على المستخدمين!';

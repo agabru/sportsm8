@@ -53,3 +53,8 @@ $lang['comment_not_delete']='Sorry!!Comment can\'t be deleted';
 $lang['no_pending_reqs']='No pending requests found!!';
 $lang['event_reported']='Event reported successfully';
 $lang['event_not_reported']='Event can\'t reported';
+
+
+$lang['events_not_found']='Sorry!! No Events found!!';
+$lang['no_frnds']='Sorry!!No friends found!!';
+$lang['no_users']='Sorry!!No users found!!';
