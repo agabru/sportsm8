@@ -56,3 +56,7 @@ $lang['event_not_reported']='لا يمكن الإبلاغ عن الحدث';
 $lang['events_not_found']='آسف!! لا توجد أحداث !!';
 $lang['no_frnds']='آسف !! لا يوجد أصدقاء';
 $lang['no_users']='عذرا !! لم يتم العثور على المستخدمين!';
+
+$lang['share_done']='تم مشاركة الحدث بنجاح';
+$lang['share_not_done']='فشلت مشاركة الحدث';
+$lang['no_event_members']='أعضاء الحدث غير موجود';

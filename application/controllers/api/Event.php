@@ -213,4 +213,55 @@ class Event extends REST_Controller {
         }
     }
 
+    public function incShareCount_get()
+    {
+        $event_id=$this->uri->segment(4);
+        $counted=$this->Event_model->incShareCount($event_id);
+        if (!empty($counted))
+        {
+            response(['message'=>message('share_done')]);
+        }
+        else
+        {
+            response([
+                'status' => FALSE,
+                'message'=>message('share_not_done')                
+            ]);
+        }
+    }
+
+    public function allEvents_get()
+    {
+        $user_id=$this->uri->segment(4);
+        $events=$this->Event_model->get_allEvents($user_id);
+        if (!empty($events))
+        {
+            response(['message'=>$events]);
+        }
+        else
+        {
+            response([
+                'status' => FALSE,
+                'message'=>message('events_not_found')                
+            ]);
+        }
+    }
+
+    public function eventMembers_post(){
+        $event_id=$this->input->post('event_id');
+        $user_id=$this->input->post('user_id');
+        $members=$this->Event_model->getEventMembers($user_id,$event_id);
+        if (!empty($members))
+        {
+            response(['message'=>$members]);
+        }
+        else
+        {
+            response([
+                'status' => FALSE,
+                'message'=>message('no_event_members')                
+            ]);
+        }
+    }
+
 }

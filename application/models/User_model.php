@@ -37,9 +37,10 @@ class User_model extends CI_Model {
 	}
 	public function get_user($user_id)
 	{
-		$this->db->where('user_id',$user_id);
-		$this->db->from('user');
-		$query=$this->db->get();
+		// $this->db->where('user_id',$user_id);
+		// $this->db->from('user');
+		// $query=$this->db->get();
+		$query=$this->db->query("SELECT *,(SELECT COUNT(*) FROM follow_user WHERE follow_user.following_id=$user_id AND follow_user.status='2')as nooffollowers,(SELECT COUNT(*) FROM event WHERE event.event_created_by_uid=$user_id)as noofeventscreated FROM `user` WHERE user_id=$user_id");
 		return $query->row_array();
 	}
 

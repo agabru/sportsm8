@@ -58,3 +58,7 @@ $lang['event_not_reported']='Event can\'t reported';
 $lang['events_not_found']='Sorry!! No Events found!!';
 $lang['no_frnds']='Sorry!!No friends found!!';
 $lang['no_users']='Sorry!!No users found!!';
+
+$lang['share_done']='Event sharing done successfully';
+$lang['share_not_done']='Event sharing failed';
+$lang['no_event_members']='Event members not found';

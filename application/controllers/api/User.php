@@ -17,9 +17,6 @@ class User extends REST_Controller {
     	$user_email=$this->input->post('user_email');
         $user_mobile=$this->input->post('user_mobile');
         $user_password=$this->input->post('user_password');
-        $user_dob=$this->input->post('user_dob');
-        $user_loc=$this->input->post('user_loc');
-        $user_bio=$this->input->post('user_bio');
         $user_interest=$this->input->post('user_interest');
         $user_data = array('user_name' => $user_name,
                             'user_email'=>$user_email,
