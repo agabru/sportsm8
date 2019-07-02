@@ -61,4 +61,6 @@ $lang['share_done']='تم مشاركة الحدث بنجاح';
 $lang['share_not_done']='فشلت مشاركة الحدث';
 $lang['no_event_members']='أعضاء الحدث غير موجود';
 
+$lang['notify_not_found']="آسف!! لا توجد إخطارات !!";
+
 $lang['wrong_req']='هناك خطأ ما';

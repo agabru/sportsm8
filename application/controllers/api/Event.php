@@ -176,7 +176,9 @@ class Event extends REST_Controller {
                         'comment'=>$comment);
         $comm_id=$this->Event_model->event_comment($comment_data);
         if($comm_id>0){
-                response(['message'=>message('event_commented')]);
+            $comment_data['comment_id']=$comm_id;
+            $this->Notification_model->evt_comment_notify($comment_data);
+            response(['message'=>message('event_commented')]);
         }
         else
             response(['message'=>message('event_not_commented')]);

@@ -9,6 +9,7 @@ class User extends REST_Controller {
 
         parent::__construct();
         $this->load->model('User_model');
+        $this->load->model('Notification_model');
         date_default_timezone_set("Asia/Kuwait");
     }
 
@@ -121,8 +122,8 @@ class User extends REST_Controller {
         $user_id=$this->input->post('user_id');
         $file_type=strstr($_FILES['userfile']['type'],'/',true);
         if($file_type=="image"){
-                $status='1';
-                $upload_path='./uploads/img';
+            $status='1';
+            $upload_path='./uploads/img';
         }
         else if($file_type=="video"){
             $status='1';
@@ -218,10 +219,14 @@ class User extends REST_Controller {
         $user_follow=$this->User_model->follow_user($status,$user_data);
         if (!empty($user_follow))
         {
-            if($status==1)
+            if($status==1){
+                $this->Notification_model->follow_req_notify($user_data);
                 response(['message'=>message('follow_req_success')]);
-            else if($status==2)
+            }
+            else if($status==2){
+                $this->Notification_model->follow_accpt_notify($user_data);
                 response(['message'=>message('follow_req_accept')]);
+            }
             else if($status==3)
                 response(['message'=>message('follow_req_reject')]);
             else
