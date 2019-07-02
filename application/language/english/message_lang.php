@@ -62,3 +62,5 @@ $lang['no_users']='Sorry!!No users found!!';
 $lang['share_done']='Event sharing done successfully';
 $lang['share_not_done']='Event sharing failed';
 $lang['no_event_members']='Event members not found';
+
+$lang['wrong_req']='Something went wrong!!';

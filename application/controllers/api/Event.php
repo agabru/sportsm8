@@ -8,6 +8,7 @@ class Event extends REST_Controller {
 
 		parent::__construct();
 		$this->load->model('Event_model');
+        $this->load->model('Notification_model');
 	}
 
 	public function details_post()
@@ -106,10 +107,16 @@ class Event extends REST_Controller {
                           'event_id'=>$event_id,
                           'status'=>$status);
         $event_status=$this->Event_model->like_event($event_data);
-        if($event_status>0)
-            response(['message'=>message('event_liked')]);
+        if($event_status>0){
+            if($status>0){
+                $event_status=$this->Notification_model->like_evt_notify($event_data);
+                response(['message'=>message('event_liked')]);
+            }
+            else
+                response(['message'=>message('event_not_liked')]);
+        }
         else
-            response(['message'=>message('event_not_liked')]);
+            response(['message'=>message('wrong_req')]);
     }
 
     public function remove_like_post(){
@@ -118,6 +125,8 @@ class Event extends REST_Controller {
         $event_status=$this->Event_model->remove_like_event($user_id,$event_id);
         if($event_status>0)
         {
+            $event_data=array('sender_id'=>$user_id,'event_id'=>$event_id,'type'=>'1');
+            $this->Notification_model->remove_like_evt_notify($event_data);
             response(['message'=>message('like_removed')]);
         }
         else
@@ -131,8 +140,10 @@ class Event extends REST_Controller {
                         'event_id'=>$event_id,
                         'status'=>'0');
         $req_status=$this->Event_model->event_req($req_data);
-        if($req_status>0)
+        if($req_status>0){
+            $this->Notification_model->event_req_notify($req_data);
             response(['message'=>message('event_requested')]);
+        }
         else
             response(['message'=>message('event_not_requested')]);
     }
@@ -146,11 +157,11 @@ class Event extends REST_Controller {
                         'status'=>$status);
         $req_status=$this->Event_model->req_accept($req_data);
         if($req_status>0){
+            $this->Notification_model->req_accept_notify($req_data);
             if($status=='1')
                 response(['message'=>message('event_req_accept')]);
-            elseif ($status=='2') {
+            elseif ($status=='2')
                 response(['message'=>message('event_req_reject')]);
-            }
         }
         else
             response(['message'=>message('wrong_event_req')]);
