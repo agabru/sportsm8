@@ -16,11 +16,13 @@ class User extends REST_Controller {
     	$user_name=$this->input->post('user_name');
     	$user_email=$this->input->post('user_email');
         $user_mobile=$this->input->post('user_mobile');
+        $user_dob=$this->input->post('user_dob');
         $user_password=$this->input->post('user_password');
         $user_interest=$this->input->post('user_interest');
         $user_data = array('user_name' => $user_name,
                             'user_email'=>$user_email,
                             'user_mobile'=>$user_mobile,
+                            'user_dob'=>$user_dob,
                             'user_password'=>$user_password);
 
         $user_id=$this->User_model->signup($user_data);
@@ -48,6 +50,12 @@ class User extends REST_Controller {
     function profile_put(){
         $user_id=$this->uri->segment(4);
         $user_data=json_decode(file_get_contents("php://input"),true);
+        if(array_key_exists('user_img', $user_data)){
+            $user_data['user_img']=$this->uploadfile($user_data['user_img']);
+        }
+        if(array_key_exists('user_cover_img', $user_data)){
+          $user_data['user_cover_img']=$this->uploadfile($user_data['user_cover_img']);  
+        }        
         if(array_key_exists('user_interest', $user_data))
         {
             $user_interest=$user_data['user_interest'];
@@ -292,5 +300,17 @@ class User extends REST_Controller {
                 ]);
             
         }
+    }
+
+    function uploadfile($img_str){
+        $img_arr=explode(',', $img_str);
+        $img_ext_part=explode(';',$img_arr[0]);
+        $img_ext=substr($img_ext_part[0], strpos($img_ext_part[0],'/')+1);
+        $img_name=time().".".$img_ext;
+        $full_img=IMG_PATH.$img_name;
+        $ifp=fopen($full_img,"wb");
+        fwrite($ifp, base64_decode($img_arr[1]));
+        fclose($ifp);
+        return $img_name;
     }
 }

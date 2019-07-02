@@ -84,4 +84,6 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('abbas',"lang->line('user_not_deleted')");
+define('UPLOADS',"C:\\xampp\htdocs\sportsm8\uploads\\");
+define('IMG_PATH',UPLOADS."img\\");
+define('VDO_PATH',UPLOADS."vdo\\");
