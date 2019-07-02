@@ -11,11 +11,17 @@ class Notification_model extends CI_Model {
 		// $this->db->where('receiver_id',$user_id);
 		// $this->db->from('user_notification');
 		// $query=$this->db->get();
-		$query=$this->db->query("SELECT user_notification.sender_id,user.user_name AS sender_name,user_notification.type,user_notification.event_id,user_notification.comment_id,IFNULL(event.event_name,'') as event_name 
+		$query=$this->db->query("SELECT user_notification.user_notify_id,user_notification.sender_id,user.user_name AS sender_name,user_notification.type,user_notification.event_id,user_notification.comment_id,IFNULL(event.event_name,'') as event_name 
 			FROM user_notification JOIN user ON user_notification.sender_id=user.user_id
 			LEFT JOIN event ON event.event_id=user_notification.event_id 
 			WHERE user_notification.receiver_id=$user_id");
 		return $query->result_array();
+	}
+
+	function update_read_status($notify_id,$notify_data){
+		$this->db->where('user_notify_id',$notify_id);
+		$this->db->update('user_notification',$notify_data);
+		return $this->db->affected_rows();
 	}
 
 	function like_evt_notify($event_data){

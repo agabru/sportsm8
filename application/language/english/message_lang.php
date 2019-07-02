@@ -64,5 +64,7 @@ $lang['share_not_done']='Event sharing failed';
 $lang['no_event_members']='Event members not found';
 
 $lang['notify_not_found']="Sorry!! No notifications found!!";
+$lang['read_done']='Notification read successfully';
+$lang['read_not_done']='Notifications still unread!!';
 
 $lang['wrong_req']='Something went wrong!!';

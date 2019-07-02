@@ -55,5 +55,16 @@ class Notification extends REST_Controller {
             ]);
 	}
 
-	
+	function read_notification_put(){
+		$notify_id=$this->uri->segment(4);
+		$notify_data=array("read_status"=>'1');
+		$read_status=$this->Notification_model->update_read_status($notify_id,$notify_data);
+		if($read_status>0)
+			response(['message'=>message('read_done')]);
+		else
+			response([
+				'status'=>FALSE,
+				'message'=>'read_not_done'
+			]);
+	}
 }
