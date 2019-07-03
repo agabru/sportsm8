@@ -30,6 +30,13 @@ class User extends REST_Controller {
 
         if (!empty($user_id))
         {
+            $skey = sha1(md5(microtime(true) . mt_Rand()));
+            //$skey = "20Turkey25"; // you can change it
+            $userAccessToken = $this->safe_b64encode($user_id.$user_name.$user_password.$skey);
+            //$token_id=$this->generate_token();
+            $auth_arr[' token_id']=$userAccessToken;
+            $auth_arr['user_id']=$user_id;
+            $gnrted=$this->User_model->insert_access_token($auth_arr);
             $user_interest=explode(',', $user_interest);
             $int_arr=array();
             foreach ($user_interest as $key => $value) {
@@ -37,7 +44,7 @@ class User extends REST_Controller {
                 $int_arr[$key]['cat_id']=$value;
             }
             $this->User_model->add_interest($int_arr);
-            response(['message'=>message('user_created') ]);
+            response(['message'=>$userAccessToken]);
         }
         else
         {
@@ -49,7 +56,7 @@ class User extends REST_Controller {
     }
 
     function profile_put(){
-        $user_id=$this->uri->segment(4);
+        $user_id=getUserId();
         $user_data=json_decode(file_get_contents("php://input"),true);
         if(array_key_exists('user_img', $user_data)){
             $user_data['user_img']=$this->uploadfile($user_data['user_img']);
@@ -84,7 +91,7 @@ class User extends REST_Controller {
     }
 
     function profile_get(){
-        $user_id=$this->uri->segment(4);
+        $user_id=getUserId();
         $user=$this->User_model->get_user($user_id);
         if (!empty($user))
         {
@@ -101,7 +108,7 @@ class User extends REST_Controller {
     }
 
     function profile_delete(){
-        $user_id=$this->uri->segment(4);
+        $user_id=getUserId();
         $result=$this->User_model->delete_user($user_id);
         if (!empty($result))
         {
@@ -119,7 +126,7 @@ class User extends REST_Controller {
     function media_post(){
 
         $user_media= time();
-        $user_id=$this->input->post('user_id');
+        $user_id=getUserId();
         $file_type=strstr($_FILES['userfile']['type'],'/',true);
         if($file_type=="image"){
             $status='1';
@@ -174,7 +181,7 @@ class User extends REST_Controller {
     }
 
     function media_get(){
-        $user_id=$this->uri->segment(4);
+        $user_id=getUserId();
         $user_media=$this->User_model->get_user_media($user_id);
         // print_r($user_media);
         // die();
@@ -193,7 +200,7 @@ class User extends REST_Controller {
     }
 
     function media_delete(){
-        $user_id=$this->uri->segment(4);
+        $user_id=getUserId();
         $user_media=$this->User_model->delete_user_media($user_id);
         if (!empty($user_media))
         {
@@ -209,7 +216,7 @@ class User extends REST_Controller {
     }
 
     function follow_post(){
-        $follower_id    =  $this->input->post('user_id');
+        $follower_id    =  getUserId();
         $following_id   =  $this->input->post('follow_id');
         $status         =  $this->input->post('status');
 
@@ -242,7 +249,7 @@ class User extends REST_Controller {
     }
 
     function report_post(){
-        $report_by_user    =  $this->input->post('report_by_user');
+        $report_by_user    =  getUserId();
         $report_to_user    =  $this->input->post('report_to_user');
         $status            =  $this->input->post('status');
 
@@ -269,7 +276,7 @@ class User extends REST_Controller {
     }
 
     function delete_report_post(){
-        $report_by_user    =  $this->input->post('report_by_user');
+        $report_by_user    =  getUserId();
         $report_to_user    =  $this->input->post('report_to_user');
         $user_report=$this->User_model->delete_report_user($report_by_user,$report_to_user);
         if (!empty($user_report))
@@ -291,7 +298,7 @@ class User extends REST_Controller {
     }
 
     function frnd_suggest_get(){
-        $user_id=$this->uri->segment(4);
+        $user_id=getUserId();
         $frnds=$this->User_model->get_frnd_suggest($user_id);
         if (!empty($frnds))
         {
@@ -318,4 +325,35 @@ class User extends REST_Controller {
         fclose($ifp);
         return $img_name;
     }
+
+    function safe_b64encode($string) {
+       $data = base64_encode($string);
+        $data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
+        return $data;
+    }
+
+    // function generate_token(){
+
+    //     $crypto_rand_secure = function ( $min, $max ) {
+    //         $range = $max - $min;
+    //         if ( $range < 0 ) return $min; // not so random...
+    //         $log    = log( $range, 2 );
+    //         $bytes  = (int) ( $log / 8 ) + 1; // length in bytes
+    //         $bits   = (int) $log + 1; // length in bits
+    //         $filter = (int) ( 1 << $bits ) - 1; // set all lower bits to 1
+    //         do {
+    //             $rnd = hexdec( bin2hex( openssl_random_pseudo_bytes( $bytes ) ) );
+    //             $rnd = $rnd & $filter; // discard irrelevant bits
+    //         } while ( $rnd >= $range );
+    //         return $min + $rnd;
+    //     };
+
+    //     $pool= '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //     $token = "";
+    //     $max   = strlen( $pool );
+    //     for ( $i = 0; $i < 16; $i++ ) {
+    //         $token .= $pool[$crypto_rand_secure( 0, $max )];
+    //     }
+    //     return $token; 
+    // }    
 }

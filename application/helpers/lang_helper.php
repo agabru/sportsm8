@@ -11,7 +11,7 @@ if ( ! function_exists('message'))
 	/**
 	 * @param string $lang_key  message key that needs to be fetched
 	 *
-	 * @return string SQL command
+	 * @return string
 	 */
 
 	function message($lang_key)
@@ -27,7 +27,7 @@ if ( ! function_exists('response'))
 	/**
 	 * @param string $resp  Response that needs to be shown
 	 *
-	 * @return string SQL command
+	 * @return string
 	 */
 
 	function response($resp)
@@ -39,9 +39,9 @@ if ( ! function_exists('response'))
 
 if( ! function_exists('varprintf')){
 	/**
-	 * @param string $resp  Response that needs to be shown
+	 * @param string $vals  multiple arguments
 	 *
-	 * @return string SQL command
+	 * @return string
 	 */
 
 	function varprintf(...$vals)

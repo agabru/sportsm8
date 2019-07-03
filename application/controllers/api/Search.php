@@ -10,7 +10,7 @@ class Search extends REST_Controller {
 	}
 
 	function suggest_events_get(){
-		$user_id=$this->uri->segment(4);
+		$user_id=getUserId();
 		$get_events=$this->Search_model->get_suggested_events($user_id);
 		if(count($get_events)>0)
 			response($get_events);
@@ -34,7 +34,7 @@ class Search extends REST_Controller {
 	}
 
 	function friends_get(){
-		$user_id=$this->uri->segment(4);
+		$user_id=getUserId();
 		$get_frnds=$this->Search_model->get_friends($user_id);
 		if(count($get_frnds)>0)
 			response($get_frnds);
@@ -43,7 +43,7 @@ class Search extends REST_Controller {
 	}
 
 	function search_frnds_post(){
-		$user_id=$this->input->post('user_id');
+		$user_id=getUserId();
 		$search_str=$this->input->post('search_str');
 		$str_arr=explode(' ', $search_str);
 		foreach ($str_arr as $key => $value) {
@@ -58,7 +58,7 @@ class Search extends REST_Controller {
 	}
 
 	function users_get(){
-		$user_id=$this->uri->segment(4);
+		$user_id=getUserId();
 		$get_users=$this->Search_model->get_users($user_id);
 		if(count($get_users)>0)
 			response($get_users);
@@ -68,7 +68,7 @@ class Search extends REST_Controller {
 
 	function search_users_post()
 	{
-		$user_id=$this->input->post('user_id');
+		$user_id=getUserId();
 		$search_str=$this->input->post('search_str');
 		$str_arr=explode(' ', $search_str);
 		foreach ($str_arr as $key => $value) {

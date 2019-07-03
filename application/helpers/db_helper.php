@@ -67,3 +67,23 @@ if ( ! function_exists('drop_trigger'))
 		return "DROP TRIGGER {$trigger_name};";
 	}
 }
+
+if ( ! function_exists('getUserId'))
+{
+	/**
+	 * @param no params
+	 *
+	 * @return number user_id
+	 */
+	function getUserId()
+	{
+		$CI =& get_instance();
+		if(AUTH_TOKEN!=""){
+			$CI->db->where('token_id',AUTH_TOKEN);
+			$CI->db->from('user_authentication');
+			$query=$CI->db->get();
+			return $query->row_array()['user_id'];
+		}
+		return 0;
+	}
+}

@@ -12,7 +12,7 @@ class Notification extends REST_Controller {
 	}
 
 	function notifications_list_get(){
-		$user_id=$this->uri->segment(4);
+		$user_id=getUserId();
 		$notifications=$this->Notification_model->get_notifications($user_id);
 		if(count($notifications)>0){
 			foreach ($notifications as $key => $value) {

@@ -17,6 +17,11 @@ class User_model extends CI_Model {
 		}
 	}
 
+	function insert_access_token($auth_arr){
+		$this->db->insert('user_authentication',$auth_arr);
+		return $this->db->affected_rows();
+	}
+
 	public function add_interest($int_arr)
 	{
 		$this->db->insert_batch('user_category',$int_arr);

@@ -13,7 +13,7 @@ class Event extends REST_Controller {
 
 	public function details_post()
 	{
-		$user_id=$this->input->post('user_id');
+		$user_id=getUserId();
 		$event_name=$this->input->post('event_name');
 		$event_type=$this->input->post('event_type');
 		$event_desc=$this->input->post('event_desc');
@@ -100,7 +100,7 @@ class Event extends REST_Controller {
 	}
 
     public function like_post(){
-        $user_id =$this->input->post('user_id');
+        $user_id =getUserId();
         $event_id=$this->input->post('event_id');
         $status  =$this->input->post('status');
         $event_data=array('user_id'=>$user_id,
@@ -120,7 +120,7 @@ class Event extends REST_Controller {
     }
 
     public function remove_like_post(){
-        $user_id =$this->input->post('user_id');
+        $user_id =getUserId();
         $event_id=$this->input->post('event_id');
         $event_status=$this->Event_model->remove_like_event($user_id,$event_id);
         if($event_status>0)
@@ -134,7 +134,7 @@ class Event extends REST_Controller {
     }
 
     public function event_req_post(){
-        $user_id =$this->input->post('user_id');
+        $user_id =getUserId();
         $event_id=$this->input->post('event_id');
         $req_data=array('user_id'=>$user_id,
                         'event_id'=>$event_id,
@@ -149,7 +149,7 @@ class Event extends REST_Controller {
     }
 
     public function req_accept_post(){
-        $user_id =$this->input->post('user_id');
+        $user_id =getUserId();
         $event_id=$this->input->post('event_id');
         $status=$this->input->post('status');
         $req_data=array('user_id'=>$user_id,
@@ -168,7 +168,7 @@ class Event extends REST_Controller {
     }
 
     public function event_comment_post(){
-        $user_id =$this->input->post('user_id');
+        $user_id =getUserId();
         $event_id=$this->input->post('event_id');
         $comment=$this->input->post('comment');
         $comment_data=array('user_id'=>$user_id,
@@ -195,7 +195,7 @@ class Event extends REST_Controller {
 	}
 
     public function pending_req_get(){
-        $user_id =$this->uri->segment(4);
+        $user_id =getUserId();
         $reqs=$this->Event_model->get_pending_reqs($user_id);
         if(count($reqs)>0){
                 response(['message'=>$reqs]);
@@ -206,7 +206,7 @@ class Event extends REST_Controller {
 
     public function report_post(){
         $event_id    =  $this->input->post('event_id');
-        $user_id     =  $this->input->post('user_id');
+        $user_id     =  getUserId();
         $report      =  $this->input->post('report');
 
         $event_data = array('event_id' => $event_id,
@@ -245,7 +245,7 @@ class Event extends REST_Controller {
 
     public function allEvents_get()
     {
-        $user_id=$this->uri->segment(4);
+        $user_id=getUserId();
         $events=$this->Event_model->get_allEvents($user_id);
         if (!empty($events))
         {
@@ -262,7 +262,7 @@ class Event extends REST_Controller {
 
     public function eventMembers_post(){
         $event_id=$this->input->post('event_id');
-        $user_id=$this->input->post('user_id');
+        $user_id=getUserId();
         $members=$this->Event_model->getEventMembers($user_id,$event_id);
         if (!empty($members))
         {
