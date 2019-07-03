@@ -64,5 +64,13 @@ $lang['no_event_members']='أعضاء الحدث غير موجود';
 $lang['notify_not_found']="آسف!! لا توجد إخطارات !!";
 $lang['read_done']='قراءة الإشعار بنجاح';
 $lang['read_not_done']='الإخطارات لا تزال غير مقروءة!';
+$lang['like_event_notify']="%s أحب هذا الحدث الخاص بك %s";
+$lang['join_evt_req_notify']="%s طلب للانضمام إلى هذا الحدث الخاص بك %s";
+$lang['join_evt_req_acc']="%s قبل طلبك للانضمام إلى الحدث %s";
+$lang['follow_usr_req_notify']="لب متابعتك. %s";
+$lang['follow_usr_req_acc']="%s لقد بدأت المتابعة";
+$lang['comm_prof_notify']="علق على ملفك الشخصي. %s";
+$lang['comm_med_notify']="علق على الوسائط التي حمّلتها. %s";
+$lang['comm_evt_notify']="%s علق على هذا الحدث الخاص بك %s";
 
 $lang['wrong_req']='هناك خطأ ما';

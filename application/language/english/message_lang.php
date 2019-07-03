@@ -66,5 +66,13 @@ $lang['no_event_members']='Event members not found';
 $lang['notify_not_found']="Sorry!! No notifications found!!";
 $lang['read_done']='Notification read successfully';
 $lang['read_not_done']='Notifications still unread!!';
+$lang['like_event_notify']="%s liked your event %s";
+$lang['join_evt_req_notify']="%s requested to join your event %s";
+$lang['join_evt_req_acc']="%s accepted your request to join his event %s";
+$lang['follow_usr_req_notify']="%s requested to follow you.";
+$lang['follow_usr_req_acc']="You started following %s";
+$lang['comm_prof_notify']="%s commented on your profile.";
+$lang['comm_med_notify']="%s commented on your uploaded media.";
+$lang['comm_evt_notify']="%s commented on your event %s";
 
 $lang['wrong_req']='Something went wrong!!';

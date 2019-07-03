@@ -17,8 +17,7 @@ if ( ! function_exists('message'))
 	function message($lang_key)
 	{
 		$CI =& get_instance();
-		$idiom = isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])?$_SERVER['HTTP_ACCEPT_LANGUAGE']:'english';
-		$CI->lang->load('message', $idiom);
+		$CI->lang->load('message',LANG);
 		return $CI->lang->line($lang_key);
 	}
 }
@@ -35,5 +34,24 @@ if ( ! function_exists('response'))
 	{
 		$CI =& get_instance();
 		return $CI->set_response($resp);
+	}
+}
+
+if( ! function_exists('varprintf')){
+	/**
+	 * @param string $resp  Response that needs to be shown
+	 *
+	 * @return string SQL command
+	 */
+
+	function varprintf(...$vals)
+	{
+		$get_args=func_get_args(func_num_args());
+		if(LANG=="arabic"){
+			$message=array_shift($get_args);
+			$get_args=array_reverse($get_args);
+			array_unshift($get_args,$message);
+		}	
+		return call_user_func_array("sprintf", $get_args);
 	}
 }

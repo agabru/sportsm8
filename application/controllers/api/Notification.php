@@ -19,27 +19,27 @@ class Notification extends REST_Controller {
 				//:like_event,2:join_event,3:accept_event,4:follow_user_req,5:follow_user_accpt,6:comment_profile,7:comment_media,8:comment_event
 				switch ($value['type']) {
 					case '1':
-						$notifications[$key]['message']=$value['sender_name']." liked your event ".$value['event_name'];
+						$notifications[$key]['message']=varprintf(message('like_event_notify'),$value['sender_name'],$value['event_name']);
 						break;
 					case '2':
-						$notifications[$key]['message']=$value['sender_name']." requested to join your event ".$value['event_name'];
+						$notifications[$key]['message']=varprintf(message('join_evt_req_notify'),$value['sender_name'],$value['event_name']);
 					case '3':
-						$notifications[$key]['message']=$value['sender_name']." accepted your request to join his event ".$value['event_name'];
+						$notifications[$key]['message']=varprintf(message('join_evt_req_acc'),$value['sender_name'],$value['event_name']);
 						break;
 					case '4':
-						$notifications[$key]['message']=$value['sender_name']." requested to follow you.";
+						$notifications[$key]['message']=varprintf(message('follow_usr_req_notify'),$value['sender_name']);
 						break;
 					case '5':
-						$notifications[$key]['message']="You started following ".$value['sender_name'];
+						$notifications[$key]['message']=varprintf(message('follow_usr_req_acc'),$value['sender_name']);
 						break;
 					case '6':
-						$notifications[$key]['message']=$value['sender_name']." commented on your profile.";
+						$notifications[$key]['message']=varprintf(message('comm_prof_notify'),$value['sender_name']);
 						break;
 					case '7':
-						$notifications[$key]['message']=$value['sender_name']." commented on your uploaded media.";
+						$notifications[$key]['message']=varprintf(message('comm_med_notify'),$value['sender_name']);
 						break;
 					case '8':
-						$notifications[$key]['message']=$value['sender_name']." commented on your event ".$value['event_name'];
+						$notifications[$key]['message']=varprintf(message('comm_evt_notify'),$value['sender_name'],$value['event_name']);
 						break;
 					default:
 						$notifications[$key]['message']='';
@@ -67,4 +67,9 @@ class Notification extends REST_Controller {
 				'message'=>'read_not_done'
 			]);
 	}
+
+	// function tocheckmyprintf_get(){
+	// 	$val=varprintf(message('like_event_notify'),"abc","salsa");
+	// 	echo $val;
+	// }
 }

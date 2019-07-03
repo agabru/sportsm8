@@ -84,6 +84,7 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
+define('LANG',isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])?$_SERVER['HTTP_ACCEPT_LANGUAGE']:'english');
 define('UPLOADS',"C:\\xampp\htdocs\sportsm8\uploads\\");
 define('IMG_PATH',UPLOADS."img\\");
 define('VDO_PATH',UPLOADS."vdo\\");
