@@ -22,6 +22,7 @@ class Event extends REST_Controller {
 		$event_time=$this->input->post('event_time');
 		$gender_rqd=$this->input->post('gender_rqd');
 		$event_cat =$this->input->post('event_cat');
+        $event_photo=uploadfile($this->input->post('event_photo'))['name'];
 		$event_data=array('event_name'=>$event_name,
 						'event_type'=>$event_type,
 						'event_desc'=>$event_desc,
@@ -30,7 +31,8 @@ class Event extends REST_Controller {
 						'event_time'=>$event_time,
 						'gender_rqd'=>$gender_rqd,
 						'event_category'=>$event_cat,
-						'event_created_by_uid'=>$user_id
+						'event_created_by_uid'=>$user_id,
+                        'event_photo'=>$event_photo
 					);
 	 	$event=$this->Event_model->event_create($event_data);
 	 	if ($event>0)
