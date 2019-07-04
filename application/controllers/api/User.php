@@ -64,7 +64,7 @@ class User extends REST_Controller {
                 $user['user_img']=str_replace(UPLOADS, RE_UPLOADS, $user['user_img']);
                 @unlink($user['user_img']);
             }            
-            $user_data['user_img']=$this->uploadfile($user_data['user_img']);
+            $user_data['user_img']=uploadfile($user_data['user_img'])['name'];
         }
         if(array_key_exists('user_cover_img', $user_data)){
             $user=$this->User_model->get_user($user_id);
@@ -72,7 +72,7 @@ class User extends REST_Controller {
                 $user['user_cover_img']=str_replace(UPLOADS, RE_UPLOADS, $user['user_cover_img']);
                 @unlink($user['user_cover_img']);
             }            
-            $user_data['user_cover_img']=$this->uploadfile($user_data['user_cover_img']);  
+            $user_data['user_cover_img']=uploadfile($user_data['user_cover_img'])['name'];  
         }        
         if(array_key_exists('user_interest', $user_data))
         {
@@ -137,43 +137,47 @@ class User extends REST_Controller {
 
         $user_media= time();
         $user_id=getUserId();
-        $file_type=strstr($_FILES['userfile']['type'],'/',true);
-        if($file_type=="image"){
-            $status='1';
-            $upload_path='./uploads/img';
-        }
-        else if($file_type=="video"){
-            $status='1';
-            $upload_path='./uploads/vdo';
-        }
-        else{
-            response([
-            'status' => FALSE,
-            'message' => message('Please upload only image/video')
-            ]);
-        }
-        $config['upload_path']          =  $upload_path;
-        $config['allowed_types']        =  '*';
-        $config['file_name']            =  $user_media;
-        $config['file_ext_tolower']     =  TRUE;
+        $userfile=$this->input->post('userfile');
+        $img_name=uploadfile($userfile);
+        // $file_type=strstr($_FILES['userfile']['type'],'/',true);
+        // if($file_type=="image"){
+        //     $status='1';
+        //     $upload_path='./uploads/img';
+        // }
+        // else if($file_type=="video"){
+        //     $status='1';
+        //     $upload_path='./uploads/vdo';
+        // }
+        // else{
+        //     response([
+        //     'status' => FALSE,
+        //     'message' => message('Please upload only image/video')
+        //     ]);
+        // }
+        // $config['upload_path']          =  $upload_path;
+        // $config['allowed_types']        =  '*';
+        // $config['file_name']            =  $user_media;
+        // $config['file_ext_tolower']     =  TRUE;
         
-        $this->load->library('upload', $config);
+        // $this->load->library('upload', $config);
 
-        if (!$this->upload->do_upload('userfile'))
-        {
-            response([
-                    'status' => FALSE,
-                    'message' => strip_tags($this->upload->display_errors())
-                ]);
-        }
-        else
-        {
-            
-            
+        // if (!$this->upload->do_upload('userfile'))
+        // {
+        //     response([
+        //             'status' => FALSE,
+        //             'message' => strip_tags($this->upload->display_errors())
+        //         ]);
+        // }
+        // else
+        // {
+            if($img_name['type']=="image")
+                $type='1';
+            else
+                $type='2';
             $user_data = array(
                                 'user_id'    => $user_id,
-                                'media_type' => $status,
-                                'media_name' => $this->upload->data('file_name')
+                                'media_type' => $type,
+                                'media_name' => $img_name['name']
                                 );
             $result=$this->User_model->upload_user_media($user_data);
             if ($result>0)
@@ -187,7 +191,7 @@ class User extends REST_Controller {
                     'message' => message('media_not_uploaded')
                 ]);
             }            
-        }
+        //}
     }
 
     function media_get(){
@@ -197,9 +201,9 @@ class User extends REST_Controller {
         {
             foreach ($user_media as $key => $value) {
                 if($value['media_type']==1)
-                    $user_media[$key]['media_name']=VDO_PATH.$value['media_type'];
+                    $user_media[$key]['media_name']=IMG_PATH.$value['media_name'];
                 elseif($value['media_type']==2)
-                    $user_media[$key]['media_name']=IMG_PATH.$value['media_type'];
+                    $user_media[$key]['media_name']=VDO_PATH.$value['media_name'];
             }
             response($user_media);
         }
@@ -328,18 +332,6 @@ class User extends REST_Controller {
                 ]);
             
         }
-    }
-
-    function uploadfile($img_str){
-        $img_arr=explode(',', $img_str);
-        $img_ext_part=explode(';',$img_arr[0]);
-        $img_ext=substr($img_ext_part[0], strpos($img_ext_part[0],'/')+1);
-        $img_name=time().".".$img_ext;
-        $full_img=RE_IMG_PATH.$img_name;
-        $ifp=fopen($full_img,"wb");
-        fwrite($ifp, base64_decode($img_arr[1]));
-        fclose($ifp);
-        return $img_name;
     }
 
     function safe_b64encode($string) {

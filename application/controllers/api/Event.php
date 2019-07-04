@@ -22,6 +22,7 @@ class Event extends REST_Controller {
 		$event_time=$this->input->post('event_time');
 		$gender_rqd=$this->input->post('gender_rqd');
 		$event_cat =$this->input->post('event_cat');
+        $event_photo=uploadfile($this->input->post('event_photo'))['name'];
 		$event_data=array('event_name'=>$event_name,
 						'event_type'=>$event_type,
 						'event_desc'=>$event_desc,
@@ -30,7 +31,8 @@ class Event extends REST_Controller {
 						'event_time'=>$event_time,
 						'gender_rqd'=>$gender_rqd,
 						'event_category'=>$event_cat,
-						'event_created_by_uid'=>$user_id
+						'event_created_by_uid'=>$user_id,
+                        'event_photo'=>$event_photo
 					);
 	 	$event=$this->Event_model->event_create($event_data);
 	 	if ($event>0)
@@ -52,6 +54,8 @@ class Event extends REST_Controller {
 	 	$event=$this->Event_model->get_event_details($event_id);
 	 	if (!empty($event))
         {
+            if($event['event_photo']!="")
+                $event['event_photo']=IMG_PATH.$event['event_photo'];
             response(['message'=>$event]);
         }
         else
@@ -83,12 +87,18 @@ class Event extends REST_Controller {
 	public function details_put(){
 		$event_id=$this->uri->segment(4);
         $evt_data=json_decode(file_get_contents("php://input"),true);
-        // print_r($user_data);
-        // die();
+        // if(isset($evt_data['event_photo']))
+        // {
+        //     if($evt_data['event_photo']!=""){
+        //         $event_photo=str_replace(UPLOADS, RE_UPLOADS, $evt_data['event_photo']);
+        //         @unlink($event_photo);
+        //     }            
+        //     $user_data['user_img']=uploadfile($user_data['user_img'])['name'];
+        // }
         $status=$this->Event_model->edit_event_details($event_id,$evt_data);
         if ($status>0)
         {
-            response(['message'=>message('event_updated') ]);
+            response(['message'=>message('event_updated')]);
         }
         else
         {

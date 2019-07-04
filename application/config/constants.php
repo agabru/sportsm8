@@ -84,12 +84,12 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('BASE_URL',"http://localhost/sportsm8/");
+define('BASE_URL',"http://".$_SERVER['SERVER_NAME']."/sportsm8/");
 define('LANG',isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])?$_SERVER['HTTP_ACCEPT_LANGUAGE']:'english');
 define('AUTH_TOKEN',isset(getallheaders()['Authorization'])?getallheaders()['Authorization']:'');
 define('UPLOADS',BASE_URL."uploads/");
-define('RE_UPLOADS',"./uploads/");
-define('RE_IMG_PATH',RE_UPLOADS."img/");
-define('RE_VDO_PATH',RE_UPLOADS."vdo/");
+define('REL_UPLOADS',"./uploads/");
+define('REL_IMG_PATH',REL_UPLOADS."img/");
+define('REL_VDO_PATH',REL_UPLOADS."vdo/");
 define('IMG_PATH',UPLOADS."img/");
 define('VDO_PATH',UPLOADS."vdo/");
