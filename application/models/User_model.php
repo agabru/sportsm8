@@ -45,7 +45,10 @@ class User_model extends CI_Model {
 		// $this->db->where('user_id',$user_id);
 		// $this->db->from('user');
 		// $query=$this->db->get();
-		$query=$this->db->query("SELECT *,(SELECT COUNT(*) FROM follow_user WHERE follow_user.following_id=$user_id AND follow_user.status='2')as nooffollowers,(SELECT COUNT(*) FROM event WHERE event.event_created_by_uid=$user_id)as noofeventscreated FROM `user` WHERE user_id=$user_id");
+		$query=$this->db->query("SELECT user.user_id,user.user_name,user.user_mobile,user.user_email,(IF(user.user_img!='',CONCAT('".IMG_PATH."',user.user_img),'')) AS user_img,(IF(user.user_cover_img!='',CONCAT('".IMG_PATH."',user.user_cover_img),'')) AS user_cover_img,user.user_dob,
+			(SELECT COUNT(*) FROM follow_user WHERE follow_user.following_id=$user_id AND follow_user.status='2')as nooffollowers,
+			(SELECT COUNT(*) FROM event WHERE event.event_created_by_uid=$user_id)as noofeventscreated FROM `user` 
+			WHERE user_id=$user_id");
 		return $query->row_array();
 	}
 

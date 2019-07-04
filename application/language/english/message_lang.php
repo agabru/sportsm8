@@ -18,15 +18,19 @@ $lang['follow_req_success']='Follow requested successfully';
 $lang['follow_req_accept']='Follow request accepted';
 $lang['follow_req_reject']='Follow request rejected';
 $lang['wrong_follow_req']='Wrong follow request';
-
+$lang['follow_req_failure']='Follow request failure';
 $lang['media_uploaded'] = 'File Uploaded successfully';
 $lang['media_not_uploaded'] = 'File uploading failed';
 $lang['wrong_media'] = 'Please upload only image/video';
 $lang['user_media_not_found']='User Media Not Found';
+$lang['user_media_deleted']='User media deleted successfully';
 
 $lang['user_reported']='User reported successfully';
 $lang['user_blocked']='User blocked successfully';
 $lang['wrong_report_req']='Wrong report request';
+$lang['user_report_rev']='User report reverted';
+$lang['user_block_rev']='User block reverted';
+$lang['wrong_rev_req']='Wrong revert request';
 $lang['report_req_failure']='Report request failed';
 $lang['frnd_not_found']='Friends not found!!';
 

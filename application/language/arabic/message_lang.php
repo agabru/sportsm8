@@ -18,15 +18,20 @@ $lang['follow_req_success']='اتبع المطلوبة بنجاح';
 $lang['follow_req_accept']='اتبع طلب مقبول';
 $lang['follow_req_reject']='اتبع طلب رفض';
 $lang['wrong_follow_req']='متابعة طلب خاطئ';
+$lang['follow_req_failure']='اتبع فشل الطلب';
 
 $lang['media_not_uploaded'] = 'فشل تحميل الملف';
 $lang['media_uploaded'] = 'تم رفع الملف بنجاح';
 $lang['wrong_media'] = 'يرجى تحميل الصورة فقط / الفيديو';
 $lang['user_media_not_found']='لم يتم العثور على وسائط المستخدم';
+$lang['user_media_deleted']='تم حذف وسائط المستخدم بنجاح';
 
 $lang['user_reported']='أبلغ المستخدم بنجاح';
 $lang['user_blocked']='تم حظر المستخدم بنجاح';
 $lang['wrong_report_req']='طلب تقرير خاطئ';
+$lang['user_report_rev']='عاد تقرير المستخدم';
+$lang['user_block_rev']='عادت كتلة المستخدم';
+$lang['wrong_rev_req']='طلب إرجاع خاطئ';
 $lang['report_req_failure']='فشل طلب التقرير';
 $lang['frnd_not_found']='لم يتم العثور على أصدقاء!';
 

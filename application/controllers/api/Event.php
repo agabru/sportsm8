@@ -198,7 +198,7 @@ class Event extends REST_Controller {
         $user_id =getUserId();
         $reqs=$this->Event_model->get_pending_reqs($user_id);
         if(count($reqs)>0){
-                response(['message'=>$reqs]);
+            response(['message'=>$reqs]);
         }
         else
             response(['message'=>message('no_pending_reqs')]);

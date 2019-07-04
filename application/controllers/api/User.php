@@ -59,10 +59,20 @@ class User extends REST_Controller {
         $user_id=getUserId();
         $user_data=json_decode(file_get_contents("php://input"),true);
         if(array_key_exists('user_img', $user_data)){
+            $user=$this->User_model->get_user($user_id);
+            if($user['user_img']!=""){
+                $user['user_img']=str_replace(UPLOADS, RE_UPLOADS, $user['user_img']);
+                @unlink($user['user_img']);
+            }            
             $user_data['user_img']=$this->uploadfile($user_data['user_img']);
         }
         if(array_key_exists('user_cover_img', $user_data)){
-          $user_data['user_cover_img']=$this->uploadfile($user_data['user_cover_img']);  
+            $user=$this->User_model->get_user($user_id);
+            if($user['user_cover_img']!=""){
+                $user['user_cover_img']=str_replace(UPLOADS, RE_UPLOADS, $user['user_cover_img']);
+                @unlink($user['user_cover_img']);
+            }            
+            $user_data['user_cover_img']=$this->uploadfile($user_data['user_cover_img']);  
         }        
         if(array_key_exists('user_interest', $user_data))
         {
@@ -183,10 +193,14 @@ class User extends REST_Controller {
     function media_get(){
         $user_id=getUserId();
         $user_media=$this->User_model->get_user_media($user_id);
-        // print_r($user_media);
-        // die();
         if (!empty($user_media))
         {
+            foreach ($user_media as $key => $value) {
+                if($value['media_type']==1)
+                    $user_media[$key]['media_name']=VDO_PATH.$value['media_type'];
+                elseif($value['media_type']==2)
+                    $user_media[$key]['media_name']=IMG_PATH.$value['media_type'];
+            }
             response($user_media);
         }
         else
@@ -204,7 +218,9 @@ class User extends REST_Controller {
         $user_media=$this->User_model->delete_user_media($user_id);
         if (!empty($user_media))
         {
-            response($user_media);
+            response([
+                    'message' => message('user_media_deleted')
+                ]); 
         }
         else
         {
@@ -282,11 +298,11 @@ class User extends REST_Controller {
         if (!empty($user_report))
         {
             if($status==1)
-                response(['message'=>message('user_reported')]);
+                response(['message'=>message('user_report_rev')]);
             else if($status==2)
-                response(['message'=>message('user_blocked')]);
+                response(['message'=>message('user_block_rev')]);
             else
-                response(['message'=>message('wrong_report_req')]);
+                response(['message'=>message('wrong_rev_req')]);
         }
         else
         {
@@ -319,7 +335,7 @@ class User extends REST_Controller {
         $img_ext_part=explode(';',$img_arr[0]);
         $img_ext=substr($img_ext_part[0], strpos($img_ext_part[0],'/')+1);
         $img_name=time().".".$img_ext;
-        $full_img=IMG_PATH.$img_name;
+        $full_img=RE_IMG_PATH.$img_name;
         $ifp=fopen($full_img,"wb");
         fwrite($ifp, base64_decode($img_arr[1]));
         fclose($ifp);
@@ -331,29 +347,4 @@ class User extends REST_Controller {
         $data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
         return $data;
     }
-
-    // function generate_token(){
-
-    //     $crypto_rand_secure = function ( $min, $max ) {
-    //         $range = $max - $min;
-    //         if ( $range < 0 ) return $min; // not so random...
-    //         $log    = log( $range, 2 );
-    //         $bytes  = (int) ( $log / 8 ) + 1; // length in bytes
-    //         $bits   = (int) $log + 1; // length in bits
-    //         $filter = (int) ( 1 << $bits ) - 1; // set all lower bits to 1
-    //         do {
-    //             $rnd = hexdec( bin2hex( openssl_random_pseudo_bytes( $bytes ) ) );
-    //             $rnd = $rnd & $filter; // discard irrelevant bits
-    //         } while ( $rnd >= $range );
-    //         return $min + $rnd;
-    //     };
-
-    //     $pool= '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    //     $token = "";
-    //     $max   = strlen( $pool );
-    //     for ( $i = 0; $i < 16; $i++ ) {
-    //         $token .= $pool[$crypto_rand_secure( 0, $max )];
-    //     }
-    //     return $token; 
-    // }    
 }
