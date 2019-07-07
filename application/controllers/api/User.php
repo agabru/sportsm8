@@ -63,7 +63,7 @@ class User extends REST_Controller {
             if($user['user_img']!=""){
                 $user['user_img']=str_replace(UPLOADS, RE_UPLOADS, $user['user_img']);
                 @unlink($user['user_img']);
-            }            
+            }
             $user_data['user_img']=uploadfile($user_data['user_img'])['name'];
         }
         if(array_key_exists('user_cover_img', $user_data)){
@@ -71,8 +71,8 @@ class User extends REST_Controller {
             if($user['user_cover_img']!=""){
                 $user['user_cover_img']=str_replace(UPLOADS, RE_UPLOADS, $user['user_cover_img']);
                 @unlink($user['user_cover_img']);
-            }            
-            $user_data['user_cover_img']=uploadfile($user_data['user_cover_img'])['name'];  
+            }
+            $user_data['user_cover_img']=uploadfile($user_data['user_cover_img'])['name'];
         }        
         if(array_key_exists('user_interest', $user_data))
         {

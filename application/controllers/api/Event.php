@@ -87,16 +87,17 @@ class Event extends REST_Controller {
 	public function details_put(){
 		$event_id=$this->uri->segment(4);
         $evt_data=json_decode(file_get_contents("php://input"),true);
-        // if(isset($evt_data['event_photo']))
-        // {
-        //     if($evt_data['event_photo']!=""){
-        //         $event_photo=str_replace(UPLOADS, RE_UPLOADS, $evt_data['event_photo']);
-        //         @unlink($event_photo);
-        //     }            
-        //     $user_data['user_img']=uploadfile($user_data['user_img'])['name'];
-        // }
+        if(isset($evt_data['event_photo']))
+        {
+            $evt=$this->Event_model->get_event_details($event_id);
+            if($evt['event_photo']!=""){
+                $event_photo=REL_IMG_PATH.$evt['event_photo'];
+                @unlink($event_photo);
+            }            
+            $evt_data['event_photo']=uploadfile($evt_data['event_photo'])['name'];
+        }
         $status=$this->Event_model->edit_event_details($event_id,$evt_data);
-        if ($status>0)
+        if ($status>0)  
         {
             response(['message'=>message('event_updated')]);
         }
